@@ -1,3 +1,4 @@
+/* eslint-disable drizzle/enforce-delete-with-where */
 import { faker } from '@faker-js/faker'
 import { users, restaurants } from './schema'
 import { db } from './connection'
@@ -33,15 +34,18 @@ async function run() {
   /**
    * create manager
    */
-  const [manager] = await db.insert(users).values([
-    {
-      name: faker.person.fullName(),
-      email: 'mario@cv.com',
-      role: 'manager',
-    },
-  ]).returning({
-    id: users.id,
-  })
+  const [manager] = await db
+    .insert(users)
+    .values([
+      {
+        name: faker.person.fullName(),
+        email: 'mario@cv.com',
+        role: 'manager',
+      },
+    ])
+    .returning({
+      id: users.id,
+    })
 
   console.log(chalk.yellow('👌Create manager!'))
 
@@ -63,8 +67,7 @@ async function run() {
   process.exit()
 }
 
-run()
-  .catch(async (err) => {
-    console.error(err);
-    process.exit(1);
-  });
+run().catch(async (err) => {
+  console.error(err)
+  process.exit(1)
+})
