@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
+import { z } from 'zod'
 
 import { db } from '../../db/connection'
 import { restaurants, users } from '../../db/schema'
-import { z } from 'zod'
 
 export async function registerRestaurant(app: FastifyInstance) {
   app.post('/restaurants', async (request, reply) => {

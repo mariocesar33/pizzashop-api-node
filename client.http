@@ -10,3 +10,13 @@ Content-Type: application/json
   "email": "silva@gmail.com",
   "phone": "9271571"
 }
+
+###
+
+# @name send_auth_link
+Post {{baseUrl}}/authenticate
+Content-Type: application/json
+
+{
+  "email": "silva@gmail.com"
+}
