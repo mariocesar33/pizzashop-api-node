@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/http/server.ts",
+    "dev": "tsx watch src/server.ts",
     "generate": "drizzle-kit generate:pg",
     "migrate": "tsx src/db/migrate.ts",
     "seed": "tsx src/db/seed.ts",

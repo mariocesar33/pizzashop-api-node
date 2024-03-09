@@ -1,13 +1,11 @@
-import 'dotenv/config'
-
 import fastify from 'fastify'
-import { env } from '../env'
+
+import { env } from './env'
+import { registerRestaurant } from './http/routes/register-restaurant'
 
 const app = fastify()
 
-app.get('/', () => {
-  return 'Olá node'
-})
+app.register(registerRestaurant)
 
 app
   .listen({

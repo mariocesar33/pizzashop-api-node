@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:3334
+
+# @name register_restaurant
+Post {{baseUrl}}/restaurants
+Content-Type: application/json
+
+{
+  "restaurantName": "zulmira-sup",
+  "name": "Mário César",
+  "email": "silva@gmail.com",
+  "phone": "9271571"
+}
