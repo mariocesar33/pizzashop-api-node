@@ -7,6 +7,7 @@ import chalk from 'chalk'
 
 import { registerRestaurant } from './http/routes/register-restaurant'
 import { sendAuthLink } from './http/routes/send-auth-link'
+import { authenticateFromLink } from './http/routes/authenticate-from-link'
 
 const app = fastify()
 
@@ -18,6 +19,7 @@ app.register(fastifyCookie)
 
 app.register(registerRestaurant)
 app.register(sendAuthLink)
+app.register(authenticateFromLink)
 
 app
   .listen({

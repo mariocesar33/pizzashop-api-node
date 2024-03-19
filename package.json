@@ -17,6 +17,7 @@
     "@fastify/cookie": "^9.3.1",
     "@fastify/jwt": "^8.0.0",
     "@paralleldrive/cuid2": "^2.2.2",
+    "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.29.4",
     "fastify": "^4.26.2",

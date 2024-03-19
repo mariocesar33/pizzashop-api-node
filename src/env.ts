@@ -9,7 +9,7 @@ const envSchema = z.object({
   AUTH_REDIRECT_URL: z.string().url().min(1),
   DATABASE_URL: z.string().url().min(1),
   JWT_SECRET_KEY: z.string().min(1),
-  PORT: z.coerce.number().default(3334),
+  PORT: z.coerce.number().default(3333),
 })
 
 const _env = envSchema.safeParse(process.env)
