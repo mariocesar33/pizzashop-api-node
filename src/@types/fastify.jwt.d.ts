@@ -5,6 +5,7 @@ declare module '@fastify/jwt' {
     payload: { restaurantId?: string }
     user: {
       sub: string
+      restaurantId?: string
     }
   }
 }

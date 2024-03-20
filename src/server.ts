@@ -9,6 +9,7 @@ import { registerRestaurant } from './http/routes/register-restaurant'
 import { sendAuthLink } from './http/routes/send-auth-link'
 import { authenticateFromLink } from './http/routes/authenticate-from-link'
 import { getProfile } from './http/routes/get-profile'
+import { getManagedRestaurant } from './http/routes/get-managed-restaurant'
 
 const app = fastify()
 
@@ -26,6 +27,7 @@ app.register(registerRestaurant)
 app.register(sendAuthLink)
 app.register(authenticateFromLink)
 app.register(getProfile)
+app.register(getManagedRestaurant)
 
 app
   .listen({
