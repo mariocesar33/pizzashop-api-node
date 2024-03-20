@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
+import dayjs from 'dayjs'
+import { eq } from 'drizzle-orm'
 
 import { db } from '../../db/connection'
-import dayjs from 'dayjs'
-import { UnauthorizedError } from './errors/unauthorized-error'
 import { authLinks } from '../../db/schema'
-import { eq } from 'drizzle-orm'
+import { UnauthorizedError } from './errors/unauthorized-error'
 
 export async function authenticateFromLink(app: FastifyInstance) {
   app.get('/auth-links/authenticate', async (request, reply) => {
@@ -41,23 +41,29 @@ export async function authenticateFromLink(app: FastifyInstance) {
       },
     })
 
-    const token = await reply.jwtSign(
-      { restaurantId: managedRestaurant?.id },
-      {
-        sign: {
-          sub: authLinkFromCode.userId,
+    try {
+      const token = await reply.jwtSign(
+        { restaurantId: managedRestaurant?.id },
+        {
+          sign: {
+            sub: authLinkFromCode.userId,
+          },
         },
-      },
-    )
+      )
 
-    reply.setCookie('auth', token, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: '/',
-    })
+      reply.setCookie('auth', token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+      })
 
-    await db.delete(authLinks).where(eq(authLinks.code, code))
+      await db.delete(authLinks).where(eq(authLinks.code, code))
 
-    return reply.redirect(redirect)
+      return reply.send({ token }).redirect(redirect)
+    } catch (err) {
+      if (err instanceof UnauthorizedError) {
+        return reply.status(400).send({ message: err.message })
+      }
+    }
   })
 }

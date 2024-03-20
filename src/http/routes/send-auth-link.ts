@@ -5,6 +5,7 @@ import { createId } from '@paralleldrive/cuid2'
 import { db } from '../../db/connection'
 import { authLinks } from '../../db/schema'
 import { env } from '../../env'
+import { UnauthorizedError } from './errors/unauthorized-error'
 
 export async function sendAuthLink(app: FastifyInstance) {
   app.post('/authenticate', async (request) => {
@@ -21,7 +22,7 @@ export async function sendAuthLink(app: FastifyInstance) {
     })
 
     if (!userFromEmail) {
-      throw new Error('User not found.')
+      throw new UnauthorizedError()
     }
 
     const authLinkCode = createId()
