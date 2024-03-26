@@ -23,6 +23,6 @@ export async function getManagedRestaurant(app: FastifyInstance) {
       throw new Error('Restaurant not found.')
     }
 
-    return reply.send({ restaurant })
+    return reply.send(restaurant)
   })
 }

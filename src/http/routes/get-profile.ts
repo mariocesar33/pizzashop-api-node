@@ -18,6 +18,6 @@ export async function getProfile(app: FastifyInstance) {
       throw new Error('User not found.')
     }
 
-    return reply.status(200).send({ user })
+    return reply.status(200).send(user)
   })
 }

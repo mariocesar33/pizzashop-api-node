@@ -59,6 +59,6 @@ export async function getOrderDetails(app: FastifyInstance) {
       return reply.status(400).send({ message: 'Order not found' })
     }
 
-    return reply.send({ order })
+    return reply.send(order)
   })
 }

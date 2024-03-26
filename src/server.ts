@@ -12,6 +12,9 @@ import { getProfile } from './http/routes/get-profile'
 import { getManagedRestaurant } from './http/routes/get-managed-restaurant'
 import { getOrderDetails } from './http/routes/get-order-details'
 import { approveOrder } from './http/routes/approve-order'
+import { cancelOrder } from './http/routes/cancel-order'
+import { deliverOrder } from './http/routes/deliver-order'
+import { dispatchOrder } from './http/routes/dispatch-order'
 
 const app = fastify()
 
@@ -32,6 +35,9 @@ app.register(getProfile)
 app.register(getManagedRestaurant)
 app.register(getOrderDetails)
 app.register(approveOrder)
+app.register(cancelOrder)
+app.register(deliverOrder)
+app.register(dispatchOrder)
 
 app
   .listen({
