@@ -11,6 +11,7 @@ import { authenticateFromLink } from './http/routes/authenticate-from-link'
 import { getProfile } from './http/routes/get-profile'
 import { getManagedRestaurant } from './http/routes/get-managed-restaurant'
 import { getOrderDetails } from './http/routes/get-order-details'
+import { approveOrder } from './http/routes/approve-order'
 
 const app = fastify()
 
@@ -30,6 +31,7 @@ app.register(authenticateFromLink)
 app.register(getProfile)
 app.register(getManagedRestaurant)
 app.register(getOrderDetails)
+app.register(approveOrder)
 
 app
   .listen({
