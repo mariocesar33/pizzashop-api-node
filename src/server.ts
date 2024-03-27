@@ -15,6 +15,7 @@ import { approveOrder } from './http/routes/approve-order'
 import { cancelOrder } from './http/routes/cancel-order'
 import { deliverOrder } from './http/routes/deliver-order'
 import { dispatchOrder } from './http/routes/dispatch-order'
+import { getOrders } from './http/routes/get-orders'
 
 const app = fastify()
 
@@ -38,6 +39,7 @@ app.register(approveOrder)
 app.register(cancelOrder)
 app.register(deliverOrder)
 app.register(dispatchOrder)
+app.register(getOrders)
 
 app
   .listen({
