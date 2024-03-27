@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { and, count, eq, getTableColumns, ilike } from 'drizzle-orm'
+import { and, count, desc, eq, ilike, sql } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { db } from '../../db/connection'
@@ -28,10 +28,19 @@ export async function getOrders(app: FastifyInstance) {
     const { customerName, orderId, status, pageIndex } =
       getOrdersQuerySchema.parse(request.query)
 
-    const orderTableColumns = getTableColumns(orders)
+    // const orderTableColumns = getTableColumns(orders)
 
     const baseQuery = db
-      .select(orderTableColumns)
+      .select(
+        // orderTableColumns
+        {
+          orderId: orders.id,
+          createdAt: orders.createdAt,
+          status: orders.status,
+          total: orders.totalInCents,
+          customerName: users.name,
+        },
+      )
       .from(orders)
       .innerJoin(users, eq(users.id, orders.customerId))
       .where(
@@ -51,7 +60,19 @@ export async function getOrders(app: FastifyInstance) {
         .select()
         .from(baseQuery.as('baseQuery'))
         .offset(pageIndex * perPage)
-        .limit(perPage),
+        .limit(perPage)
+        .orderBy((fields) => {
+          return [
+            sql`CASE ${fields.status}
+              WHEN 'pending' THEN 1
+              WHEN 'processing' THEN 2
+              WHEN 'delivering' THEN 3
+              WHEN 'delivered' THEN 4
+              WHEN 'canceled' THEN 99
+            END`,
+            desc(fields.createdAt),
+          ]
+        }),
     ])
 
     const amountOfOrders = amountOfOrdersQuery[0].count
