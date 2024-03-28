@@ -19,6 +19,7 @@ import { getOrders } from './http/routes/get-orders'
 import { getMonthReceipt } from './http/routes/get-month-receipt'
 import { getDayOrdersAmount } from './http/routes/get-day-orders-amaunt'
 import { getMonthOrdersAmount } from './http/routes/get-month-orders-amount'
+import { getMonthCanceledOrdersAmount } from './http/routes/get-month-canceled-orders-amount'
 
 const app = fastify()
 
@@ -46,6 +47,7 @@ app.register(getOrders)
 app.register(getMonthReceipt)
 app.register(getDayOrdersAmount)
 app.register(getMonthOrdersAmount)
+app.register(getMonthCanceledOrdersAmount)
 
 app
   .listen({
