@@ -59,7 +59,7 @@ export async function getMonthReceipt(app: FastifyInstance) {
         : null
 
     return reply.send({
-      receipt: currentMonthReceipt?.receipt,
+      receipt: currentMonthReceipt?.receipt || 0,
       diffFromLastMonth: diffFromLastMonth
         ? Number((diffFromLastMonth - 100).toFixed(2))
         : 0,
