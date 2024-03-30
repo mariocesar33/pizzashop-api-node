@@ -23,8 +23,11 @@ export async function deliverOrder(app: FastifyInstance) {
     const { orderId } = deliverOrderParamsSchema.parse(request.params)
 
     const order = await db.query.orders.findFirst({
-      where(fields, { eq }) {
-        return eq(fields.id, orderId)
+      where(fields, { eq, and }) {
+        return and(
+          eq(fields.id, orderId),
+          eq(fields.restaurantId, restaurantId),
+        )
       },
     })
 
