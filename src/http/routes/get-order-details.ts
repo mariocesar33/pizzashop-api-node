@@ -4,6 +4,10 @@ import { z } from 'zod'
 import { UnauthorizedError } from './errors/unauthorized-error'
 import { db } from '../../db/connection'
 
+const getOrderDetailsParamsSchema = z.object({
+  orderId: z.string(),
+})
+
 export async function getOrderDetails(app: FastifyInstance) {
   app.get('/orders/:orderId', async (request, reply) => {
     await request.jwtVerify()
@@ -13,10 +17,6 @@ export async function getOrderDetails(app: FastifyInstance) {
     if (!restaurantId) {
       throw new UnauthorizedError()
     }
-
-    const getOrderDetailsParamsSchema = z.object({
-      orderId: z.string(),
-    })
 
     const { orderId } = getOrderDetailsParamsSchema.parse(request.params)
 

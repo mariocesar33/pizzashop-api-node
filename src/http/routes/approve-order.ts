@@ -6,6 +6,10 @@ import { db } from '../../db/connection'
 import { orders } from '../../db/schema'
 import { eq } from 'drizzle-orm'
 
+const getOrderDetailsParamsSchema = z.object({
+  orderId: z.string(),
+})
+
 export async function approveOrder(app: FastifyInstance) {
   app.patch('/orders/:orderId/approve', async (request, reply) => {
     await request.jwtVerify()
@@ -15,10 +19,6 @@ export async function approveOrder(app: FastifyInstance) {
     if (!restaurantId) {
       throw new UnauthorizedError()
     }
-
-    const getOrderDetailsParamsSchema = z.object({
-      orderId: z.string(),
-    })
 
     const { orderId } = getOrderDetailsParamsSchema.parse(request.params)
 

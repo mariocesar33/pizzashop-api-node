@@ -4,16 +4,16 @@ import { z } from 'zod'
 import { db } from '../../db/connection'
 import { restaurants, users } from '../../db/schema'
 
+const registerRestaurantSchema = z.object({
+  restaurantName: z.string(),
+  managerName: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  role: z.enum(['manager', 'customer']).default('manager'),
+})
+
 export async function registerRestaurant(app: FastifyInstance) {
   app.post('/restaurants', async (request, reply) => {
-    const registerRestaurantSchema = z.object({
-      restaurantName: z.string(),
-      managerName: z.string(),
-      email: z.string().email(),
-      phone: z.string(),
-      role: z.enum(['manager', 'customer']).default('manager'),
-    })
-
     const { restaurantName, managerName, email, phone } =
       registerRestaurantSchema.parse(request.body)
 

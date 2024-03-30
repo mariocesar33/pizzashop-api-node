@@ -6,6 +6,10 @@ import { UnauthorizedError } from './errors/unauthorized-error'
 import { db } from '../../db/connection'
 import { orders } from '../../db/schema'
 
+const cancelOrderParamsSchema = z.object({
+  orderId: z.string(),
+})
+
 export async function cancelOrder(app: FastifyInstance) {
   app.patch('/orders/:orderId/cancel', async (request, reply) => {
     await request.jwtVerify()
@@ -15,10 +19,6 @@ export async function cancelOrder(app: FastifyInstance) {
     if (!restaurantId) {
       throw new UnauthorizedError()
     }
-
-    const cancelOrderParamsSchema = z.object({
-      orderId: z.string(),
-    })
 
     const { orderId } = cancelOrderParamsSchema.parse(request.params)
 

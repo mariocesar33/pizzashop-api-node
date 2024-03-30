@@ -6,6 +6,10 @@ import { UnauthorizedError } from './errors/unauthorized-error'
 import { db } from '../../db/connection'
 import { orders } from '../../db/schema'
 
+const deliverOrderParamsSchema = z.object({
+  orderId: z.string(),
+})
+
 export async function deliverOrder(app: FastifyInstance) {
   app.patch('/orders/:orderId/deliver', async (request, reply) => {
     await request.jwtVerify()
@@ -15,10 +19,6 @@ export async function deliverOrder(app: FastifyInstance) {
     if (!restaurantId) {
       throw new UnauthorizedError()
     }
-
-    const deliverOrderParamsSchema = z.object({
-      orderId: z.string(),
-    })
 
     const { orderId } = deliverOrderParamsSchema.parse(request.params)
 

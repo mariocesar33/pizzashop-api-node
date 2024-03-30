@@ -7,13 +7,13 @@ import { db } from '../../db/connection'
 import { authLinks } from '../../db/schema'
 import { UnauthorizedError } from './errors/unauthorized-error'
 
+const authenticateFromLinkQuerySchema = z.object({
+  code: z.string(),
+  redirect: z.string(),
+})
+
 export async function authenticateFromLink(app: FastifyInstance) {
   app.get('/auth-links/authenticate', async (request, reply) => {
-    const authenticateFromLinkQuerySchema = z.object({
-      code: z.string(),
-      redirect: z.string(),
-    })
-
     const { code, redirect } = authenticateFromLinkQuerySchema.parse(
       request.query,
     )
